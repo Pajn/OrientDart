@@ -1,0 +1,9 @@
+name: OrientDart
+version: 0.0.1
+description: An Orientdb driver
+dependencies:
+  crypto: any
+  http: any
+dev_dependencies:
+  guinness: any
+  unittest: any
