@@ -1,6 +1,6 @@
-import 'specs/gremlin.dart' as gremlin;
-import 'specs/server.dart' as server;
-import 'specs/sql.dart' as sql;
+import 'specs/gremlin_test.dart' as gremlin;
+import 'specs/server_test.dart' as server;
+import 'specs/sql_test.dart' as sql;
 
 main() {
   gremlin.main();

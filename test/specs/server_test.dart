@@ -40,6 +40,7 @@ main() {
             dbs.forEach((db) {
               expect(db).toBeA(OrientDb);
             });
+            expect(dbs.any((db) => db.name == 'GreatefulDeadConcerts'));
           }));
     });
 

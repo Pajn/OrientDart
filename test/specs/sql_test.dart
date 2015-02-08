@@ -303,7 +303,7 @@ main() {
           .set({'foo': 'bar'})
           .where({'name': 'reader'})
           .limit(1)
-          .scalar()
+          .one()
           .then((count) {
             expect(count).toEqual(1);
           }));
@@ -351,7 +351,7 @@ main() {
         db.sql('delete from OUser where name=:name', parameters: {
           'name': 'writer'
         }).then((response){
-          expect(response.first['value']).toEqual(1);
+          expect(response.first).toEqual(1);
         }));
     });
   });

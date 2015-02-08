@@ -6,7 +6,7 @@ export 'package:OrientDart/orient.dart';
 typedef Future Task();
 
 const TEST_SERVER = const OrientServer();
-const VEHICLE_HISTORY_GRAPH = const OrientDb('VehicleHistoryGraph', TEST_SERVER);
+const GRATEFUL_DEAD_CONCERTS = const OrientDb('GratefulDeadConcerts', TEST_SERVER);
 
 Task createTestDb(name, cb) => () =>
   deleteTestDb(name)()
