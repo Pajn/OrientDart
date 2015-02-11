@@ -50,13 +50,18 @@ main() {
       it('should be able to get a list of keys', () =>
         GRATEFUL_DEAD_CONCERTS.g.v('9:4').keys().first()
           .then((keys) {
-            expect(keys).toEqual(['song_type', 'name', 'type', 'performances']);
+            expect(keys..sort()).toEqual(['name', 'performances', 'song_type', 'type']);
           }));
 
       it('should be able to get a list of values', () =>
         GRATEFUL_DEAD_CONCERTS.g.v('9:4').values().first()
           .then((keys) {
-            expect(keys).toEqual(['original', 'BERTHA', 'song', 394]);
+            var mixedTypes = (a, b) {
+              if (a is num && b is! num) return -1;
+              if (a is! num && b is num) return 1;
+              return a.compareTo(b);
+            };
+            expect(keys..sort(mixedTypes)).toEqual([394, 'BERTHA', 'original', 'song']);
           }));
 
       describe('has', () {
