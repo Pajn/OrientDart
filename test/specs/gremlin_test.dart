@@ -68,20 +68,50 @@ main() {
           GRATEFUL_DEAD_CONCERTS.g.V.has('name', eq('BERTHA')).count()
             .then((count) => expect(count).toEqual(1)));
 
-//        it('should be able to filter elements by a property value', () =>
-//          VEHICLE_HISTORY_GRAPH.g.V.has('cityMPG', eq('19')).count()
-//            .then((count) => expect(count).toEqual(1)));
+        it('should be able to filter elements by not equal to a property value', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('name', neq('BERTHA')).count()
+            .then((count) => expect(count).toEqual(808)));
+
+        it('should be able to filter elements by greater than', () =>
+        GRATEFUL_DEAD_CONCERTS.g.V.has('performances', gt(550)).count()
+        .then((count) => expect(count).toEqual(6)));
+
+        it('should be able to filter elements by greater than or equal to', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('performances', gte(550)).count()
+            .then((count) => expect(count).toEqual(7)));
+
+        it('should be able to filter elements by less than', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('performances', lt(2)).count()
+            .then((count) => expect(count).toEqual(156)));
+
+        it('should be able to filter elements by less than or equal to', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('performances', lte(2)).count()
+            .then((count) => expect(count).toEqual(192)));
+
+        it('should be able to filter elements by inlusion in a list', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('performances', isIn([394, 397])).count()
+            .then((count) => expect(count).toEqual(3)));
+
+        it('should be able to filter elements by absence in a list', () =>
+          GRATEFUL_DEAD_CONCERTS.g.V.has('performances', notIn([394, 397])).count()
+            .then((count) => expect(count).toEqual(806)));
       });
 
       describe('hasNot', () {
         it('should be able to filter elements by property absence', () =>
-          GRATEFUL_DEAD_CONCERTS.g.V.hasNot('name').count()
-            .then((count) => expect(count).toEqual(1)));
+          GRATEFUL_DEAD_CONCERTS.g.V.hasNot('name')
+            .then((vertices) {
+              expect(vertices.length).toEqual(1);
+              expect(vertices.first.containsKey('performances')).toBeFalse();
+            }));
       });
 
-//      it('should be able to filter elements by a property interval', () =>
-//        VEHICLE_HISTORY_GRAPH.g.V.interval('cityMPG', 15, 16).count()
-//          .then((count) => expect(count).toEqual(1)));
+      it('should be able to filter elements by a property interval', () =>
+        GRATEFUL_DEAD_CONCERTS.g.V.interval('performances', 395, 400)
+          .then((vertices) {
+            expect(vertices.length).toEqual(1);
+            expect(vertices.first['performances']).toEqual(397);
+          }));
     });
 
     describe('Vertex', () {
@@ -264,7 +294,6 @@ main() {
         GRATEFUL_DEAD_CONCERTS.g.V.has('name')
           .transform('it.name[0..2]').order(direction: Direction.DESCENDING).next(5)
           .then((name) {
-            print(name);
             name = name.first;
             expect(name).toEqual(['ins', 'YOU', 'YOU', 'YOU', 'YOU']);
           }));

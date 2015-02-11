@@ -21,12 +21,12 @@ ComparisonOperator gte(num number, [String type = '']) =>
 ComparisonOperator lt(num number, [String type = '']) =>
   new ComparisonOperator('T.lt', '$number$type');
 /// Less than or equal to
-ComparisonOperator lte(number, [String type = '']) =>
-  new ComparisonOperator('T.lte', '"$number$type"');
+ComparisonOperator lte(num number, [String type = '']) =>
+  new ComparisonOperator('T.lte', '$number$type');
 /// Contained in list
 ComparisonOperator isIn(Iterable list) => new ComparisonOperator('T.in', JSON.encode(list));
 /// Not equal to
-ComparisonOperator notIn(Iterable list) => new ComparisonOperator('T.notIn', JSON.encode(list));
+ComparisonOperator notIn(Iterable list) => new ComparisonOperator('T.notin', JSON.encode(list));
 
 enum Direction {
   ASCENDING, DESCENDING
