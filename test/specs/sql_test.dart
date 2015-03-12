@@ -220,12 +220,25 @@ main() {
 //    });
 
     describe('Db::get()', () {
-      it('should find a record by its RID', () =>
+      it('should get a record by its RID', () =>
         db.get('#5:0')
           .then((user) {
             expect(user).toBeA(Map);
             expect(user['name']).toEqual('admin');
           }));
+    });
+
+    describe('Db::getAll()', () {
+      it('should get all a records by there RIDs', () =>
+      db.getAll(['#5:0', '#5:1'])
+      .then((users) {
+        expect(users).toBeA(List);
+        expect(users.length).toEqual(2);
+        expect(users[0]).toBeA(Map);
+        expect(users[0]['name']).toEqual('admin');
+        expect(users[1]).toBeA(Map);
+        expect(users[1]['name']).toEqual('reader');
+      }));
     });
 
     describe('Db::select()', () {
@@ -256,6 +269,19 @@ main() {
             expect(user).toBeA(Map);
             expect(user['name']).toEqual('admin');
           }));
+
+      it('should select records by there RIDs', () =>
+        db.select()
+        .fromAll(['#5:0', '#5:1'])
+        .all()
+        .then((users) {
+          expect(users).toBeA(List);
+          expect(users.length).toEqual(2);
+          expect(users[0]).toBeA(Map);
+          expect(users[0]['name']).toEqual('admin');
+          expect(users[1]).toBeA(Map);
+          expect(users[1]['name']).toEqual('reader');
+        }));
 
       it('should select a user with a fetch plan', () =>
         db.select()

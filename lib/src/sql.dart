@@ -250,7 +250,9 @@ class SelectQuery extends Query with Filter<SelectQuery> {
     if (_from != null) {
       sb.write(_from);
     } else {
+      sb.write('[');
       sb.writeAll(_fromAll, ', ');
+      sb.write(']');
     }
 
     _writeWhere(sb, _parameters);
