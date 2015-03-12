@@ -1,7 +1,6 @@
 library OrientDart;
 
 import 'dart:async';
-import 'dart:collection';
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';

@@ -194,11 +194,13 @@ class Pipe<T> extends GremlinQuery with Filters<T>, Transformers<T> implements F
     return execute();
   }
 
+  /// Counts the number of items in the pipe
   Future<num> count() {
     _sb.write('.count()');
     return first();
   }
 
+  /// Executes the query and returns the value
   Future then(onValue(T value), {Function onError}) =>
     execute().then(onValue, onError: onError);
 
@@ -237,6 +239,8 @@ abstract class Element<T extends Element> extends Pipe<T> {
   /// Remove an element from the graph.
   Future remove() {
     _sb.write('.remove()');
+
+    return execute();
   }
 
   /// Allows an element if it has a particular property.
@@ -319,24 +323,6 @@ class Edge extends Element {
 
   Edge._(db, sb) : super._(db, sb);
 }
-
-//class Vertices extends Vertex with Filterable<Vertices>, Filters<Vertices, Vertex> implements Function {
-//  Vertices._(db, sb) : super._(db, sb);
-//
-//  Vertices call([String edgeLabel]) {
-//    _sb.write('(${JSON.encode(edgeLabel)})');
-//    return this;
-//  }
-//}
-//
-//class Edges extends Edge with Filterable<Edges>, Filters<Edges, Edge> implements Function {
-//  Edges._(db, sb) : super._(db, sb);
-//
-//  Edges call([String label]) {
-//    _sb.write('(${JSON.encode(label)})');
-//    return this;
-//  }
-//}
 
 class Graph extends GremlinQuery {
   Vertex get V {

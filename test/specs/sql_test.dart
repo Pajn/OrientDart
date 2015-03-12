@@ -219,6 +219,15 @@ main() {
 //          }));
 //    });
 
+    describe('Db::get()', () {
+      it('should find a record by its RID', () =>
+        db.get('#5:0')
+          .then((user) {
+            expect(user).toBeA(Map);
+            expect(user['name']).toEqual('admin');
+          }));
+    });
+
     describe('Db::select()', () {
       it('should select a user', () =>
         db.select()
@@ -229,10 +238,19 @@ main() {
             expect(user['name']).toEqual('reader');
           }));
 
-      it('should select a record by its RID', () =>
+      it('should find a record by its RID', () =>
         db.select()
           .from('OUser')
           .where({'@rid': '#5:0'})
+          .one()
+          .then((user) {
+            expect(user).toBeA(Map);
+            expect(user['name']).toEqual('admin');
+          }));
+
+      it('should select a record by its RID', () =>
+        db.select()
+          .from('#5:0')
           .one()
           .then((user) {
             expect(user).toBeA(Map);

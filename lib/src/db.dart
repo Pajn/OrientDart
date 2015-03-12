@@ -8,12 +8,15 @@ class OrientDb extends Sql implements Gremlin {
 
   const OrientDb(this.name, this.server);
 
+  /// Get a single document by its rid
+  Future<Map> get(String rid) => select().from(rid).one();
+
   Future<List> gremlin(String gremlin, [Map<String, dynamic> parameters = const {}]) =>
-    server.post('/command/$name/gremlin', gremlin)
+    server._post('/command/$name/gremlin', gremlin)
       .then(_result);
 
   Future<List> sql(String sql, {Map<String, dynamic> parameters: const {}, int limit}) =>
-    server.post('/command/$name/sql', prepare(sql, parameters))
+    server._post('/command/$name/sql', prepare(sql, parameters))
       .then(_result);
 
   _result(Map response) {
